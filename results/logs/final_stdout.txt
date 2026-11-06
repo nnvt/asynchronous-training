@@ -1,0 +1,37 @@
+[12:44:12] final timing=per_job gammas={'mnist': {'ringleader': 0.05, 'malenia': 2.0, 'ia2sgd': 0.005}, 'fmnist': {'ringleader': 0.1, 'malenia': 0.005, 'ia2sgd': 0.02}} seeds=1..5: 30 runs
+[12:50:36]   1/30 runs done (385s)
+[12:50:45]   2/30 runs done (394s)
+[12:50:47]   3/30 runs done (395s)
+[12:50:57]   4/30 runs done (405s)
+[12:51:09]   5/30 runs done (417s)
+[12:54:21]   6/30 runs done (610s)
+[12:54:53]   7/30 runs done (642s)
+[12:54:54]   8/30 runs done (642s)
+[12:55:14]   9/30 runs done (663s)
+[12:55:29]   10/30 runs done (677s)
+[12:59:03]   11/30 runs done (891s)
+[12:59:52]   12/30 runs done (941s)
+[12:59:54]   13/30 runs done (942s)
+[12:59:55]   14/30 runs done (943s)
+[13:00:04]   15/30 runs done (953s)
+[13:01:21]   16/30 runs done (1030s)
+[13:01:49]   17/30 runs done (1058s)
+[13:02:03]   18/30 runs done (1072s)
+[13:02:11]   19/30 runs done (1079s)
+[13:02:13]   20/30 runs done (1082s)
+[13:04:31]   21/30 runs done (1219s)
+[13:04:53]   22/30 runs done (1241s)
+[13:05:05]   23/30 runs done (1253s)
+[13:05:17]   24/30 runs done (1266s)
+[13:05:32]   25/30 runs done (1280s)
+[13:06:17]   26/30 runs done (1325s)
+[13:06:26]   27/30 runs done (1335s)
+[13:06:36]   28/30 runs done (1344s)
+[13:06:41]   29/30 runs done (1349s)
+[13:06:55]   30/30 runs done (1364s)
+[13:06:55]   mnist  ringleader  gamma=0.05 median final ||grad f||^2 = 2.814e-04; iters 98300; max delay 198; wall 188s; diverged 0
+[13:06:55]   mnist  malenia     gamma=2 median final ||grad f||^2 = 5.048e-03; iters 1738; max delay 0; wall 92s; diverged 0
+[13:06:55]   mnist  ia2sgd      gamma=0.005 median final ||grad f||^2 = 8.432e-04; iters 780023; max delay 562; wall 247s; diverged 0
+[13:06:55]   fmnist ringleader  gamma=0.1 median final ||grad f||^2 = 4.431e-04; iters 184343; max delay 198; wall 287s; diverged 0
+[13:06:55]   fmnist malenia     gamma=0.005 median final ||grad f||^2 = 1.518e-02; iters 3260; max delay 0; wall 130s; diverged 0
+[13:06:55]   fmnist ia2sgd      gamma=0.02 median final ||grad f||^2 = 2.363e-03; iters 1462800; max delay 562; wall 399s; diverged 0
