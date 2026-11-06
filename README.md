@@ -22,7 +22,7 @@ Each one is pinned down with a clearly labelled diagnostic run below.
 |---|---|---|---|
 | E1 Fig. 1(a) MNIST, fixed τ | Rescaled ASGD beats Malenia and Ringleader; final loss ≈0.029 / 0.120 / 0.096 | Rescaled 0.029 (median of 5 seeds; curve matches the paper at every read-off point). Tuned baselines: Malenia 0.068, Ringleader 0.099 | **Replicated** (Rescaled wins by 2.3–3.4×, versus about 3–4× in the paper) |
 | E1 tuning | selected γ lie in the interior of {1e-4,…,1} | γ = 0.1 for all three methods (interior) | Replicated |
-| E2 Fig. 1(b) MNIST, Exp times | Malenia and Ringleader slowed; Rescaled "virtually identical" (≈0.029 / 0.152 / 0.140) | Rescaled 0.030 (same as fixed); Malenia 0.101 (vs 0.068 fixed); Ringleader 0.122 (seed 0 only, see note) | **Replicated** |
+| E2 Fig. 1(b) MNIST, Exp times | Malenia and Ringleader slowed; Rescaled "virtually identical" (≈0.029 / 0.152 / 0.140) | Rescaled 0.030 (same as fixed); Malenia 0.101 (vs 0.068 fixed); Ringleader 0.122 (vs 0.099 fixed) | **Replicated** |
 | Baseline curves themselves | – | the paper's Malenia curve equals our Malenia at **γ = 0.05** (off-grid); its Ringleader curve equals our verbatim Ringleader at **γ = 0.01**, in both settings to within about 3% | Discrepancy in the baselines' stepsizes (see E1) |
 | E3 Fig. 2 cumulative step | fixed: all advance α per τ_max; fluctuating: Malenia and Ringleader stall | Rescaled and Malenia match exactly. Ringleader (Alg. 1 verbatim) makes only 0.665 α/τ_max with fixed harmonic times (9.0 vs 13.7 at 14.3 τ_max). The fluctuating panel matches | **Partially** (Ringleader schedule in 2(a) not reproducible with Alg. 1 as published) |
 | E4 Fig. 3 Vanilla vs Rescaled | Rescaled → x* = −2/3, Vanilla → x̃* = 1/2; Vanilla faster "for the same cycle stepsize" | Targets replicated. The paper's curves are reproduced to 2 decimals only with *different* cycle stepsizes (0.0133 vs 0.03); with equal α, Rescaled is faster | Targets replicated; speed statement **not replicated as written** |
@@ -68,11 +68,7 @@ Median over seeds and [min, max] (`results/mnist_summary.json`; hollow markers i
 | fixed | Ringleader ASGD | 0.1 | 0.642 | 0.155 | 0.116 | **0.099** [0.074, 0.221] | 12,492 | 0.354/0.196/0.130/0.096 |
 | exp | Rescaled ASGD | 0.1 | 0.301 | 0.098 | 0.048 | **0.0302** [0.0271, 0.0329] | ≈116,000 | 0.275/0.092/0.051/0.029 |
 | exp | Malenia SGD | 0.1 | 0.359 | 0.207 | 0.136 | **0.101** [0.1005, 0.1089] | ≈1,140 | 0.447/0.263/0.195/0.152 |
-| exp | Ringleader ASGD | 0.1 | 0.753 | 0.245 | 0.135 | **0.122** (seed 0 only*) | 7,240 | 0.43/0.254/0.185/0.140 |
-
-\*Seeds 1–4 of exp/Ringleader were still running when this commit was made, because the
-machine was heavily shared. `python run_mnist.py --methods rescaled,malenia,ringleader`
-followed by `python plot.py` completes them (finished runs are cached).
+| exp | Ringleader ASGD | 0.1 | 0.970 | 0.245 | 0.130 | **0.122** [0.089, 0.153] | 7,240 | 0.43/0.254/0.185/0.140 |
 
 Tuning (final loss at T = 30,000, seed 0; see `figures/fig1_tuning.png`):
 
@@ -105,13 +101,22 @@ Tuning (final loss at T = 30,000, seed 0; see `figures/fig1_tuning.png`):
     the edge of stability: there is a loss spike early on, the median at t=2,000 is 0.64,
     and the 5-seed final losses span 0.074–0.221 (median 0.099). So the choice between
     0.1 and 0.01 depends on the tuning seed.
-  * With the table-reuse Ringleader variant (the one that matches the Fig. 2(a)
-    schedule), γ = 0.1 gives final loss 0.165 (fixed, seed 0). Its loss curves do *not*
-    look like the paper's Fig. 1, while the verbatim algorithm's do. Fig. 1 and Fig. 2(a)
-    of the paper therefore seem to come from different Ringleader implementations.
+  * **[diagnostic]** Ringleader, table-reuse variant (the one that matches the Fig. 2(a)
+    schedule), fixed times, seed 0: final loss **0.067 at γ = 0.01** (18,741 updates) and
+    0.165 at γ = 0.1. At γ = 0.01 it is clearly *better* than both the paper's Ringleader
+    (0.096) and our verbatim Ringleader at the same γ (0.095). So the paper's Fig. 1
+    Ringleader curve is the verbatim algorithm, not this variant. Fig. 1 and Fig. 2(a)
+    therefore seem to come from different Ringleader implementations.
   * Net effect: with the paper's (apparent) baseline stepsizes, the paper's 3–4× final-loss
     gap is reproduced exactly. With baselines tuned by the stated protocol, the gap
     shrinks to 2.3× (Malenia, fixed) to 3.4× (Ringleader, fixed), and Rescaled ASGD still wins.
+
+> **Note on the headline comparison.** All headline numbers (table above,
+> `figures/fig1_mnist.png`) use the stepsize **γ = 0.1** that the paper's protocol selects
+> for every method. The paper's baseline curves match Malenia at γ = 0.05 and Ringleader
+> at γ = 0.01. Those values come from single-seed diagnostic runs
+> (`figures/fig1_diagnostics.png`) and are given here only as a note. Which stepsizes
+> the headline should use is still an open decision.
 
 
 ## E3 — Fig. 2: cumulative stepsize (schedule only)
@@ -235,7 +240,7 @@ Python: the shared venv `/home/funny36/Documents/mrtvc/asynchronous-training/.ve
 PY=/home/funny36/Documents/mrtvc/asynchronous-training/.venv/bin/python
 $PY run_toy.py                     # Figs. 2-4 (schedules + toy problems), ~1 min
 $PY run_mnist.py --procs 4 --methods rescaled,malenia,ringleader   # Fig. 1, tuning + 5 seeds
-$PY run_mnist.py --procs 4 --methods ringleader_reuse --settings fixed   # diagnostic
+$PY -c 'import run_mnist as R; [R.run_one(("fixed", "ringleader_reuse", g, 0, 30000.0)) for g in (0.1, 0.01)]'  # diagnostic, seed 0
 $PY run_diag.py                    # Malenia at gamma=0.05 (diagnostic)
 $PY plot.py                        # figures/*.png
 ```
@@ -243,7 +248,7 @@ $PY plot.py                        # figures/*.png
 `run_mnist.py` caches every run in `results/mnist/<setting>_<method>_g<gamma>_s<seed>.npz`
 and writes `results/mnist_summary.json` (tuning tables, per-seed final losses, medians).
 A run at T = 30,000 takes 2–5 min on one core of this (shared, loaded) laptop. The whole
-replication took about 1 h 50 min (the machine was shared with other jobs, load ≈ 13–23; a run took 2–10 min) of wall time with 4–5 processes.
+replication took about 2 h 20 min (the machine was shared with other jobs, load ≈ 13–23; a run took 2–10 min) of wall time with 4–5 processes.
 
 ### Files
 

@@ -1,1 +1,2 @@
 (('fixed', 'ringleader_reuse', 0.1, 0, 30000.0), '512s final=0.1654 upd=18741 grads=116250')
+(('fixed', 'ringleader_reuse', 0.01, 0, 30000.0), '355s final=0.06712 upd=18741 grads=116250')
