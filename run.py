@@ -52,6 +52,8 @@ def main():
     ap.add_argument("--criterion", choices=["final", "auc"], default="final",
                     help="tuning objective: final = mean log10 gap over last 5%% of the run; "
                          "auc = mean log10 gap over the whole run")
+    ap.add_argument("--tune-points", type=int, default=400, help="time-grid points per tuning run")
+    ap.add_argument("--points", type=int, default=1000, help="time-grid points per final run")
     ap.add_argument("--processes", type=int, default=None)
     args = ap.parse_args()
 
@@ -66,7 +68,7 @@ def main():
         configs = {m: (m, E.PAPER_HPARAMS[family][m]) for m in args.methods if m in E.PAPER_HPARAMS[family]}
     else:
         best, rows = E.tune(setup, args.methods, seeds=range(args.tune_seeds), processes=args.processes,
-                            criterion=args.criterion)
+                            criterion=args.criterion, num_points=args.tune_points)
         with open(os.path.join(HERE, "results", f"{tag}_grid.json"), "w") as fh:
             json.dump(dict(best=best, grid=sorted(rows, key=lambda r: (r["method"], r["score"]))), fh, indent=1)
         print(f"best by criterion '{args.criterion}' (score = mean log10 gap):")
@@ -74,7 +76,8 @@ def main():
             print(f"  {NAMES[m]:40s} {fmt_params(b['params']):20s} score={b['score']:.3f}")
         configs = {m: (m, best[m]["params"]) for m in args.methods if np.isfinite(best[m]["score"])}
 
-    runs = E.multi_seed(setup, configs, seeds=range(args.seeds), processes=args.processes)
+    runs = E.multi_seed(setup, configs, seeds=range(args.seeds), processes=args.processes,
+                        num_points=args.points)
     E.save_runs(os.path.join(HERE, "results", f"{tag}.npz"), runs)
     print(summarize(runs, setup["T"]))
 
