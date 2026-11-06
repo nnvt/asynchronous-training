@@ -6,13 +6,13 @@ Paper: [Rescaled Asynchronous SGD: Optimal Distributed Optimization under Data a
 
 ## Results
 
-| Experiment | Paper (Rescaled / Malenia / Ringleader) | Ours | Status |
-|---|---|---|---|
-| Fig. 1a, MNIST, fixed times, final loss | 0.029 / 0.120 / 0.096 | 0.029 / 0.068 / 0.099 | ✅ Replicated (Rescaled wins 2.3–3.4×) |
-| Fig. 1b, MNIST, random times | 0.029 / 0.152 / 0.140 | 0.030 / 0.101 / 0.122 | ✅ Replicated |
-| Fig. 2, cumulative step | All methods advance at the same rate | Rescaled and Malenia match. Ringleader as published reaches 9.0, not 13.7 | ⚠️ Partial |
-| Fig. 3, Vanilla vs Rescaled | Converge to +1/2 and −2/3; Vanilla faster | Targets match. With equal stepsizes, Rescaled is faster | ⚠️ Targets only |
-| Fig. 4, Delay-Adaptive vs Rescaled | Converge to ≈1 and ≈−0.04 | 0.9995 and −0.047 | ✅ Replicated |
+| Experiment | Paper (Rescaled / Malenia / Ringleader) | Ours | Status | What doesn't match, and why |
+|---|---|---|---|---|
+| Fig. 1a, MNIST, fixed times, final loss | 0.029 / 0.120 / 0.096 | 0.029 / 0.068 / 0.099 | ✅ | Our Malenia is 1.8× better than the paper's, so Rescaled's lead is 2.3–3.4× instead of 3–4×. The paper's Malenia curve matches ours at γ = 0.05, which is not on its stated grid |
+| Fig. 1b, MNIST, random times, final loss | 0.029 / 0.152 / 0.140 | 0.030 / 0.101 / 0.122 | ✅ | Our baselines are 1.1–1.5× better than the paper's; Rescaled matches |
+| Fig. 2, cumulative stepsize, fixed times | All three advance α per τ_max (Ringleader 13.7 at 14.3 τ_max) | Rescaled and Malenia match exactly. Ringleader reaches 9.0 (0.665 α per τ_max) | ⚠️ | Ringleader's Alg. 1 as published can't reach 13.7, in any processing order of simultaneous arrivals. A variant that reuses stale table entries gives exactly 13.7, but on MNIST it reaches 0.067, not the paper's 0.096. Figs. 1 and 2a seem to use different Ringleader code. The random-time panel matches |
+| Fig. 3, Vanilla vs Rescaled ASGD | Vanilla → +1/2, Rescaled → −2/3; Vanilla faster at the same cycle stepsize α = 0.01 | Targets match; with equal α, Rescaled is faster | ⚠️ Targets only | The paper's curves are reproduced (to 2 decimals) only if Vanilla used a 2.25× larger cycle stepsize (0.03 vs 0.0133). The "Vanilla is faster" statement doesn't hold as written |
+| Fig. 4, Delay-Adaptive (DA) vs Rescaled | DA → ≈1, Rescaled → ≈−0.04 | 0.9995 and −0.047 | ✅ Endpoints | The paper's plotted DA curve matches plain Vanilla ASGD (γ = 0.01), not its stated γ/(1+δ) rule |
 
 ## Plots
 
@@ -36,9 +36,7 @@ Paper: [Rescaled Asynchronous SGD: Optimal Distributed Optimization under Data a
 
 ## Notes
 
-- Our tuned baselines (γ=0.1) beat the paper's. Its baseline curves match Malenia at γ=0.05 (off the grid) and Ringleader at γ=0.01.
-- Ringleader's Fig. 2 value of 13.7 needs a variant that reuses stale gradient-table entries, and that variant doesn't match its Fig. 1 curve. The two figures seem to come from different code.
-- The paper's Delay-Adaptive curve looks like plain ASGD, not its stated γ/(1+δ) rule.
+- The headline comparison uses our tuned γ = 0.1 for all methods.
 - Assumptions: worker i holds digit i, PyTorch default init, γ tuned on seed 0 by final loss.
 
 ## Run
