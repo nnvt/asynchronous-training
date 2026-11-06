@@ -1,0 +1,96 @@
+{
+ "fixed": {
+  "rescaled": {
+   "cum_step_at_14.3tmax_seed0": 14.14999999999987,
+   "cum_step_at_14.3tmax_median": 14.14999999999987,
+   "cum_step_at_14.3tmax_q10_q90": [
+    14.14999999999987,
+    14.14999999999987
+   ],
+   "long_run_rate_alpha_per_tmax": 1.000000000000061
+  },
+  "malenia": {
+   "cum_step_at_14.3tmax_seed0": 14.0,
+   "cum_step_at_14.3tmax_median": 14.0,
+   "cum_step_at_14.3tmax_q10_q90": [
+    14.0,
+    14.0
+   ],
+   "long_run_rate_alpha_per_tmax": 1.0,
+   "mean_round_duration_in_tmax": 1.0
+  },
+  "ringleader": {
+   "cum_step_at_14.3tmax_seed0": 8.999999999999984,
+   "cum_step_at_14.3tmax_median": 8.999999999999984,
+   "cum_step_at_14.3tmax_q10_q90": [
+    8.999999999999984,
+    8.999999999999984
+   ],
+   "long_run_rate_alpha_per_tmax": 0.66524999999998,
+   "mean_round_duration_in_tmax": 1.5031942878617512
+  },
+  "ringleader_reuse": {
+   "cum_step_at_14.3tmax_seed0": 13.699999999999967,
+   "cum_step_at_14.3tmax_median": 13.699999999999967,
+   "cum_step_at_14.3tmax_q10_q90": [
+    13.699999999999967,
+    13.699999999999967
+   ],
+   "long_run_rate_alpha_per_tmax": 0.9977500000000556,
+   "mean_round_duration_in_tmax": 1.002255073916256
+  }
+ },
+ "exp": {
+  "rescaled": {
+   "cum_step_at_14.3tmax_seed0": 14.474999999999884,
+   "cum_step_at_14.3tmax_median": 14.124999999999881,
+   "cum_step_at_14.3tmax_q10_q90": [
+    13.124374999999889,
+    14.99124999999986
+   ],
+   "long_run_rate_alpha_per_tmax": 0.9997748437500608
+  },
+  "malenia": {
+   "cum_step_at_14.3tmax_seed0": 7.0,
+   "cum_step_at_14.3tmax_median": 8.0,
+   "cum_step_at_14.3tmax_q10_q90": [
+    6.0,
+    10.100000000000009
+   ],
+   "long_run_rate_alpha_per_tmax": 0.5969,
+   "mean_round_duration_in_tmax": 1.6753224995811695
+  },
+  "ringleader": {
+   "cum_step_at_14.3tmax_seed0": 5.999999999999995,
+   "cum_step_at_14.3tmax_median": 4.999999999999998,
+   "cum_step_at_14.3tmax_q10_q90": [
+    4.000000000000002,
+    6.8999999999999915
+   ],
+   "long_run_rate_alpha_per_tmax": 0.3860024999999888,
+   "mean_round_duration_in_tmax": 2.590656796264348
+  },
+  "ringleader_reuse": {
+   "cum_step_at_14.3tmax_seed0": 8.799999999999985,
+   "cum_step_at_14.3tmax_median": 7.899999999999988,
+   "cum_step_at_14.3tmax_q10_q90": [
+    5.899999999999995,
+    10.799999999999978
+   ],
+   "long_run_rate_alpha_per_tmax": 0.5978024999999768,
+   "mean_round_duration_in_tmax": 1.6727932720255247
+  }
+ },
+ "paper_readoff": {
+  "fixed": {
+   "rescaled": 14.1,
+   "malenia": 14.0,
+   "ringleader": 13.7
+  },
+  "exp": {
+   "rescaled": 15.2,
+   "malenia": 9.0,
+   "ringleader": 5.2
+  }
+ }
+}

@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+*.tmp.npz
+# datasets live in /home/funny36/Documents/mrtvc/shared-data (not committed)
+*.gz
+*-ubyte
+data/
